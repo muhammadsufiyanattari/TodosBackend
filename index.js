@@ -10,18 +10,39 @@ app.use(express.json()); //body incripted hoti he
 
 // todo get requset jo user ko show karwni hi
 app.get("/getTodos", (req, res) => {
-  res.send(todos);
+  const message = !todos.length ? "Empty Todos" : "Data fetch Successfully !";
+  res.send({ data: todos, message });
 });
 
 // todo add karne ke lye use kar data add karwane ke lye
 app.post("/addTodo", (req, res) => {
-  todos.push({ data: req.body.todo, id: new Date().getTime() });
-  res.status(200).send("Add Todo Successfully ! "); //todo add ho gae to ye message show ho
+  // console.log(req.body);
+  const obj = {
+    todoContent: req.body.todo,
+    id: String(new Date().getTime()),
+    Creates: new Date().getDate(),
+  };
+  todos.push(obj);
+  res.status(200).send({ message: "Add Todo Successfully ! ", data: obj }); //todo add ho gae to ye message show ho
 });
 
 // selected  todo Edit karne ke lye
 app.patch("/editTodo/:id", (req, res) => {
-  res.send("hello");
+  const id = req.params.id;
+  let isFound = false;
+  for (let i = 0; i < todos.length; i++) {
+    todos[i];
+    if (todos[i].id === id) {
+      todos[i].todoContent = req.body.todoContent;
+      isFound = true;
+      break;
+    }
+  }
+  if (isFound) {
+    res.status(201).send("Todo Update Successfully !");
+  } else {
+    res.status(201).send("Todo id Not Found !");
+  }
 });
 
 // selected  todo Delet karne ke lye
