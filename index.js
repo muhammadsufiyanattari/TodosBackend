@@ -39,16 +39,42 @@ app.patch("/editTodo/:id", (req, res) => {
     }
   }
   if (isFound) {
-    res.status(201).send("Todo Update Successfully !");
+    res
+      .status(201)
+      .send({
+        data: { todoContent: req.body.todoContent, id },
+        message: "Todo Update Successfully !",
+      });
   } else {
-    res.status(201).send("Todo id Not Found !");
+    res.status(201).send({ data: null, message: "Todo id Not Found !" });
   }
 });
 
 // selected  todo Delet karne ke lye
 
 app.delete("/deletTodo/:id", (req, res) => {
-  res.send("hello");
+  // res.send("hello");
+
+
+  const id = req.params.id;
+  let isFound = false;
+  for (let i = 0; i < todos.length; i++) {
+    todos[i];
+    if (todos[i].id === id) {
+     todos.splice(i,1)
+     isFound=true
+    }
+  }
+  if (isFound) {
+    res
+      .status(201)
+      .send({
+        data: { todoContent: req.body.todoContent, id },
+        message: "Todo Delet Successfully !",
+      });
+  } else {
+    res.status(201).send({ data: null, message: " Not Found !" });
+  }
 });
 // agar user koi aese route pe jae jo he hi nahi to ye route show ho
 
