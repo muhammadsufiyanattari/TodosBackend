@@ -1,5 +1,5 @@
-import express, { json } from "express";
-import cors from "cors";
+import express, { json } from "express"
+import cors from "cors"
 const app = express();
 const port = process.env.PORT || 3000; //jab backend deploy karte hen
 //  to ye zarori nahi ke wo jo routes chala rahe he same is lye ye karte hen
