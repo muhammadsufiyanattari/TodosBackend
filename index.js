@@ -3,7 +3,7 @@ import cors from "cors"
 const app = express();
 const port = process.env.PORT || 3000; //jab backend deploy karte hen
 //  to ye zarori nahi ke wo jo routes chala rahe he same is lye ye karte hen
-app.use(cors())
+app.use(cors({origin:["http://localhost:5173"]}))
 let todos = [];
 app.use(json()); // ye routes ko cheak karta he agar hoga to response de deta he
 app.use(express.json()); //body incripted hoti he
