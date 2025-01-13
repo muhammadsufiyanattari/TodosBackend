@@ -1,9 +1,13 @@
-import express, { json } from "express"
-import cors from "cors"
+import express, { json } from "express";
+import cors from "cors";
 const app = express();
 const port = process.env.PORT || 3000; //jab backend deploy karte hen
 //  to ye zarori nahi ke wo jo routes chala rahe he same is lye ye karte hen
-app.use(cors({origin:["http://localhost:5173","https://sufiyan-todo-frontend.surge.sh"]}))
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://sufiyan-todo-frontend.surge.sh"],
+  })
+);
 let todos = [];
 app.use(json()); // ye routes ko cheak karta he agar hoga to response de deta he
 app.use(express.json()); //body incripted hoti he
@@ -40,12 +44,10 @@ app.patch("/editTodo/:id", (req, res) => {
     }
   }
   if (isFound) {
-    res
-      .status(201)
-      .send({
-        data: { todoContent: req.body.todoContent, id },
-        message: "Todo Update Successfully !",
-      });
+    res.status(201).send({
+      data: { todoContent: req.body.todoContent, id },
+      message: "Todo Update Successfully !",
+    });
   } else {
     res.status(201).send({ data: null, message: "Todo id Not Found !" });
   }
@@ -56,25 +58,27 @@ app.patch("/editTodo/:id", (req, res) => {
 app.delete("/deletTodo/:id", (req, res) => {
   // res.send("hello");
 
-
   const id = req.params.id;
   let isFound = false;
   for (let i = 0; i < todos.length; i++) {
+
     todos[i];
     if (todos[i].id === id) {
-     todos.splice(i,1)
-     isFound=true
+      todos.splice(i, 1);
+      
+      isFound = true;
+      break;
+
     }
   }
+  
   if (isFound) {
-    res
-      .status(201)
-      .send({
-        data: { todoContent: req.body.todoContent, id },
-        message: "Todo Delet Successfully !",
-      });
+    res.status(200).send({
+      data: { id },
+      message: "Todo Deleted Successfully !",
+    });
   } else {
-    res.status(201).send({ data: null, message: " Not Found !" });
+    res.status(404).send({ data: null, message: "Todo id Not Found !" });
   }
 });
 // agar user koi aese route pe jae jo he hi nahi to ye route show ho
